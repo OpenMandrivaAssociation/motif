@@ -1,5 +1,5 @@
 %define intern_name openMotif
-%define major 3
+%define major 4
 %define libname %mklibname %name %major
 
 Summary: Open Motif runtime libraries and executables
@@ -17,6 +17,7 @@ BuildRequires:	byacc pkgconfig
 BuildRequires:	flex
 BuildRequires:	libxp-devel
 BuildRequires:	libxt-devel
+BuildRequires:	libxft-devel
 BuildRequires:	x11-data-bitmaps
 BuildRequires:	libjpeg-devel libpng-devel
 
