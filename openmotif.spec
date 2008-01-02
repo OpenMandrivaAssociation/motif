@@ -11,6 +11,7 @@ Group: System/Libraries
 Source:  %{name}-%{version}.tar.bz2
 Source1: xmbind
 URL: http://www.motifzone.net/
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 BuildRequires:	byacc pkgconfig
 BuildRequires:	flex
