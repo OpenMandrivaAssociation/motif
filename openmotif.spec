@@ -1,11 +1,12 @@
 %define intern_name openMotif
 %define major 4
-%define libname %mklibname %name %major
+%define libname %mklibname %name %{major}
+%define develname %mklibname %name -d
 
 Summary: Open Motif runtime libraries and executables
 Name: openmotif
 Version: 2.3.0
-Release: %mkrel 3
+Release: %mkrel 4
 License: Open Group Public License
 Group: System/Libraries
 Source:  %{name}-%{version}.tar.bz2
@@ -21,30 +22,13 @@ BuildRequires:	libxft-devel
 BuildRequires:	x11-data-bitmaps
 BuildRequires:	libjpeg-devel libpng-devel
 
-#Patch19: openMotif-2.2.3-utf8.patch
-Patch22: openMotif-2.3.0-no_demos.patch
-Patch23: openMotif-2.2.3-uil_lib.patch
-#Patch25: openMotif-2.2.3-libdir.patch
-#Patch26: openMotif-2.2.3-char_not_supported.patch
-#Patch27: openMotif-2.2.3-pixel_length.patch
-#Patch28: openMotif-2.2.3-popup_timeout.patch
-#Patch29: openMotif-2.2.3-acinclude.patch
-#Patch30: openMotif-2.2.3-autofoo.patch
-#Patch31: openMotif-2.2.3-CAN-2004-0687-0688.patch
-#Patch32: openMotif-2.2.3-CAN-2004-0914.patch
-#Patch33: openMotif-2.2.3-CAN-2004-0914_autofoo.patch
-#Patch34: openMotif-2.2.3-tmpnam.patch
-#Patch35: openmotif-2.2.3-CAN-2004-0914_sec8.patch
-#Patch36: openMotif-2.2.3-vizcount.patch
-Patch37: openMotif-2.2.3-long64.patch
-#Patch38: openMotif-2.2.3-multiscreen.patch
-#Patch39: openMotif-2.2.3-motifzone_1193.patch
-#Patch40: openMotif-2.2.3-motifzone_1202.patch
-#Patch41: openMotif-2.2.3-CAN-2005-0605.patch
-Patch43: openMotif-2.3.0-rgbtxt.patch
-Patch45: openMotif-2.3.0-mwmrc_dir.patch
-Patch46: openMotif-2.3.0-bindings.patch
-Patch47: openMotif-2.3.0-no_X11R6.patch
+Patch0: openMotif-2.3.0-no_demos.patch
+Patch1: openMotif-2.2.3-uil_lib.patch
+Patch2: openMotif-2.3.0-rgbtxt.patch
+Patch3: openMotif-2.3.0-mwmrc_dir.patch
+Patch4: openMotif-2.3.0-bindings.patch
+Patch5: openMotif-2.3.0-no_X11R6.patch
+Patch6: openMotif-2.3.0-fix-str-fmt.patch
 
 Conflicts: lesstif <= 0.92.32-6
 
@@ -64,43 +48,28 @@ Provides: lib%{name} = %{version}-%{release}
 These are the libraries provided by is the Open Motif %{version} runtime
 environment. 
 
-%package -n %{libname}-devel
+%package -n %{develname}
 Summary: Open Motif development libraries and header files
 Group: Development/C
 Conflicts: lesstif-devel <= 0.92.32-6
 Provides: lib%{name}-devel = %{version}-%{release}
+Provides: %{name}-devel = %{version}-%{release}
 Requires: %{libname} = %{version}-%{release}
+Obsoletes: %{_lib}%{name}4-devel
 
-%description -n %{libname}-devel
+%description -n %{develname}
 This is the Open Motif %{version} development environment. It includes the
 static libraries and header files necessary to build Motif applications.
 
 %prep
 %setup -q -n %{name}-%{version}
-#%patch19 -p1 -b .utf8
-%patch22 -p0 -b .no_demos
-%patch23 -p1 -b .uil_lib
-#%patch25 -p1 -b .libdir
-#%patch26 -p1 -b .char_not_supported
-#%patch27 -p1 -b .pixel_length
-#%patch28 -p1 -b .popup_timeout
-#%patch29 -p1 -b .acinclude
-#%patch30 -p1 -b .autofoo
-#%patch31 -p1 -b .CAN-2004-0687-0688
-#%patch32 -p1 -b .CAN-2004-0914
-#%patch33 -p1 -b .CAN-2004-0914_autofoo
-#%patch34 -p1 -b .tmpnam
-#%patch35 -p1 -b .CAN-2004-0914_sec8
-#%patch36 -p1 -b .vizcount
-%patch37 -p1 -b .long64
-#%patch38 -p1 -b .multiscreen
-#%patch39 -p1 -b .motifzone_1193
-#%patch40 -p1 -b .motifzone_1202
-#%patch41 -p1 -b .CAN-2005-0605
-%patch43 -p0 -b .rgbtxt
-%patch45 -p0 -b .mwmrc_dir
-%patch46 -p0 -b .bindings
-%patch47 -p0 -b .no_X11R6
+%patch0 -p0 -b .no_demos
+%patch1 -p1 -b .uil_lib
+%patch2 -p0 -b .rgbtxt
+%patch3 -p0 -b .mwmrc_dir
+%patch4 -p0 -b .bindings
+%patch5 -p0 -b .no_X11R6
+%patch6 -p1 -b .str-fmt
 
 for i in doc/man/man3/{XmColumn,XmDataField}.3; do
 	iconv -f windows-1252 -t utf-8 < "$i" > "${i}_"
@@ -122,19 +91,19 @@ make clean
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 export LD_LIBRARY_PATH=`pwd`/lib/Mrm/.libs:`pwd`/lib/Xm/.libs
-make DESTDIR=$RPM_BUILD_ROOT prefix=%{prefix} install
-mkdir -p $RPM_BUILD_ROOT/etc/X11/xinit/xinitrc.d \
-         $RPM_BUILD_ROOT/usr/include
+make DESTDIR=%{buildroot} prefix=%{prefix} install
+mkdir -p %{buildroot}/etc/X11/xinit/xinitrc.d \
+         %{buildroot}/usr/include
 
-install -m 755 %{SOURCE1} $RPM_BUILD_ROOT/etc/X11/xinit/xinitrc.d/xmbind.sh
+install -m 755 %{SOURCE1} %{buildroot}/etc/X11/xinit/xinitrc.d/xmbind.sh
 
-mv $RPM_BUILD_ROOT/usr/man $RPM_BUILD_ROOT/usr/share/man
+mv %{buildroot}/usr/man %{buildroot}/usr/share/man
 
-rm -fr $RPM_BUILD_ROOT%{prefix}/%{_lib}/*.la \
-       $RPM_BUILD_ROOT%{prefix}/share/Xm/doc
+rm -fr %{buildroot}%{prefix}/%{_lib}/*.la \
+       %{buildroot}%{prefix}/share/Xm/doc
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -144,7 +113,7 @@ rm -fr $RPM_BUILD_ROOT%{prefix}/%{_lib}/*.la \
 %endif
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
@@ -161,17 +130,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/libMrm.so.*
-%{_libdir}/libUil.so.*
-%{_libdir}/libXm.so.*
+%{_libdir}/libMrm.so.%{major}*
+%{_libdir}/libUil.so.%{major}*
+%{_libdir}/libXm.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_bindir}/uil
 %{prefix}/include/Mrm
 %{prefix}/include/Xm
 %{prefix}/include/uil
-%{_libdir}
 %{_libdir}/lib*.a
 %{_libdir}/lib*.so
 %{_mandir}/man1/uil.1*
