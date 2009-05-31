@@ -5,11 +5,11 @@
 
 Summary: Open Motif runtime libraries and executables
 Name: openmotif
-Version: 2.3.0
-Release: %mkrel 4
+Version: 2.3.2
+Release: %mkrel 1
 License: Open Group Public License
 Group: System/Libraries
-Source:  %{name}-%{version}.tar.bz2
+Source:  %{name}-%{version}.tar.gz
 Source1: xmbind
 URL: http://www.motifzone.net/
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -63,11 +63,11 @@ static libraries and header files necessary to build Motif applications.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p0 -b .no_demos
+%patch0 -p1 -b .no_demos
 %patch1 -p1 -b .uil_lib
 %patch2 -p0 -b .rgbtxt
 %patch3 -p0 -b .mwmrc_dir
-%patch4 -p0 -b .bindings
+%patch4 -p1 -b .bindings
 %patch5 -p0 -b .no_X11R6
 %patch6 -p1 -b .str-fmt
 
@@ -99,8 +99,6 @@ mkdir -p %{buildroot}/etc/X11/xinit/xinitrc.d \
          %{buildroot}/usr/include
 
 install -m 755 %{SOURCE1} %{buildroot}/etc/X11/xinit/xinitrc.d/xmbind.sh
-
-mv %{buildroot}/usr/man %{buildroot}/usr/share/man
 
 rm -fr %{buildroot}%{prefix}/%{_lib}/*.la \
        %{buildroot}%{prefix}/share/Xm/doc
