@@ -21,6 +21,7 @@ BuildRequires:	libxt-devel
 BuildRequires:	libxft-devel
 BuildRequires:	x11-data-bitmaps
 BuildRequires:	libjpeg-devel libpng-devel
+BuildRequires:	gcc-c++, gcc, gcc-cpp
 
 Patch0: openMotif-2.3.0-no_demos.patch
 Patch1: openMotif-2.2.3-uil_lib.patch
@@ -77,6 +78,9 @@ for i in doc/man/man3/{XmColumn,XmDataField}.3; do
 done
 
 %build
+export CC=gcc
+export CXX=g++
+
 CFLAGS="$RPM_OPT_FLAGS -D_FILE_OFFSET_BITS=64" \
 ./configure \
    --prefix=%{prefix} \
@@ -91,7 +95,6 @@ make clean
 make
 
 %install
-rm -rf %{buildroot}
 
 export LD_LIBRARY_PATH=`pwd`/lib/Mrm/.libs:`pwd`/lib/Xm/.libs
 make DESTDIR=%{buildroot} prefix=%{prefix} install
@@ -103,18 +106,8 @@ install -m 755 %{SOURCE1} %{buildroot}/etc/X11/xinit/xinitrc.d/xmbind.sh
 rm -fr %{buildroot}%{prefix}/%{_lib}/*.la \
        %{buildroot}%{prefix}/share/Xm/doc
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
 
 %files
-%defattr(-,root,root)
 %doc COPYRIGHT.MOTIF README RELEASE RELNOTES
 %{_sysconfdir}/X11/xinit/xinitrc.d/xmbind.sh
 %{_sysconfdir}/X11/mwm/system.mwmrc
@@ -127,13 +120,11 @@ rm -rf %{buildroot}
 %{_mandir}/man4/mwmrc*
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/libMrm.so.%{major}*
 %{_libdir}/libUil.so.%{major}*
 %{_libdir}/libXm.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %{_bindir}/uil
 %{prefix}/include/Mrm
 %{prefix}/include/Xm
