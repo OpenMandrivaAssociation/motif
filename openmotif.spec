@@ -4,6 +4,9 @@
 %define uillibname %mklibname uil %{major}
 %define develname %mklibname %name -d
 
+%define _disable_lto 1
+%define _disable_rebuild_configure 1
+
 Summary: Open Motif runtime libraries and executables
 Name: motif
 Version: 2.3.4
