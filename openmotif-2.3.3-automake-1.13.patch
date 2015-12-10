@@ -1,0 +1,17 @@
+diff -up openmotif-2.3.3/configure.ac.automake-1_13 openmotif-2.3.3/configure.ac
+--- openmotif-2.3.3/configure.ac.automake-1_13	2013-01-13 04:00:08.290180764 +0100
++++ openmotif-2.3.3/configure.ac	2013-01-13 04:00:48.226764753 +0100
+@@ -31,12 +31,11 @@ dnl Override a default in libtool.
+ dnl
+ dnl AC_DISABLE_STATIC
+ 
+-AM_CONFIG_HEADER(include/config.h lib/Xm/Xm.h)
++AC_CONFIG_HEADERS(include/config.h lib/Xm/Xm.h)
+ 
+ dnl Checks for programs.
+ AC_PROG_CC
+ AC_PROG_CPP
+-AM_PROG_CC_STDC
+ AM_PROG_LIBTOOL
+ 
+ AC_EXEEXT

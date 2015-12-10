@@ -1,7 +1,7 @@
-diff -p -up openmotif-2.3.2/configure.ac.bindings openmotif-2.3.2/configure.ac
---- openmotif-2.3.2/configure.ac.bindings	2009-05-31 05:42:32.000000000 +0200
-+++ openmotif-2.3.2/configure.ac	2009-05-31 05:42:32.000000000 +0200
-@@ -173,7 +173,7 @@ AC_SUBST(LIBDIR)
+diff -p -up openmotif-2.3.3/configure.ac.bindings openmotif-2.3.3/configure.ac
+--- openmotif-2.3.3/configure.ac.bindings	2011-06-18 14:23:02.000000000 +0200
++++ openmotif-2.3.3/configure.ac	2011-06-18 14:34:08.084597915 +0200
+@@ -185,7 +185,7 @@
  INCDIR="${includedir}/X11"
  AC_SUBST(INCDIR)
  
@@ -9,19 +9,7 @@ diff -p -up openmotif-2.3.2/configure.ac.bindings openmotif-2.3.2/configure.ac
 +XMBINDDIR_FALLBACK="${prefix}/share/X11/bindings"
  AC_SUBST(XMBINDDIR_FALLBACK)
  
- AC_ARG_ENABLE(motif22-compatibility, [  --disable-motif22-compatibility
-diff -p -up openmotif-2.3.2/configure.bindings openmotif-2.3.2/configure
---- openmotif-2.3.2/configure.bindings	2009-05-31 05:42:32.000000000 +0200
-+++ openmotif-2.3.2/configure	2009-05-31 05:44:51.000000000 +0200
-@@ -26602,7 +26602,7 @@ LIBDIR="${libdir}/X11"
- INCDIR="${includedir}/X11"
- 
- 
--XMBINDDIR_FALLBACK="${libdir}/X11/bindings"
-+XMBINDDIR_FALLBACK="${prefix}/share/X11/bindings"
- 
- 
- # Check whether --enable-motif22-compatibility was given.
+ RM="rm -f"
 diff -p -up openmotif-2.3.2/doc/man/man3/VirtualBindings.3.bindings openmotif-2.3.2/doc/man/man3/VirtualBindings.3
 --- openmotif-2.3.2/doc/man/man3/VirtualBindings.3.bindings	2005-07-20 13:47:21.000000000 +0200
 +++ openmotif-2.3.2/doc/man/man3/VirtualBindings.3	2009-05-31 05:42:32.000000000 +0200

@@ -1,0 +1,51 @@
+diff -up openmotif-2.3.3/configure.ac.jpeg openmotif-2.3.3/configure.ac
+--- openmotif-2.3.3/configure.ac.jpeg	2011-06-18 16:24:49.800577096 +0200
++++ openmotif-2.3.3/configure.ac	2011-06-18 16:30:31.133034496 +0200
+@@ -92,6 +92,35 @@ LIBS="$save_LIBS"
+ CFLAGS="$save_CFLAGS"
+ AM_CONDITIONAL(OM_XMU, test x$X_XMU != x)
+ 
++save_LIBS="$LIBS"
++save_CFLAGS="$CFLAGS"
++LIBS="$X_LIBS $LIBS"
++CFLAGS="$X_CFLAGS $CFLAGS"
++AC_CHECK_HEADERS([jpeglib.h],
++AC_CHECK_LIB(jpeg, jpeg_read_header, 
++JPEG_LIBS=-ljpeg, JPEG_LIBS="")
++)
++
++AC_SUBST(JPEG_LIBS)
++LIBS="$save_LIBS"
++CFLAGS="$save_CFLAGS"
++AM_CONDITIONAL(OM_LIBJPEG, test x$JPEG_LIBS != x)
++
++save_LIBS="$LIBS"
++save_CFLAGS="$CFLAGS"
++LIBS="$X_LIBS $LIBS"
++CFLAGS="$X_CFLAGS $CFLAGS"
++AC_CHECK_HEADERS([png.h],
++AC_CHECK_LIB(png, png_read_info, 
++PNG_LIBS=-lpng, PNG_LIBS="")
++)
++
++AC_SUBST(PNG_LIBS)
++LIBS="$save_LIBS"
++CFLAGS="$save_CFLAGS"
++AM_CONDITIONAL(OM_LIBPNG, test x$PNG_LIBS != x)
++
++
+ dnl Checks for header files.
+ AC_HEADER_DIRENT
+ AC_HEADER_STDC
+diff -up openmotif-2.3.3/lib/Xm/Makefile.am.jpeg openmotif-2.3.3/lib/Xm/Makefile.am
+--- openmotif-2.3.3/lib/Xm/Makefile.am.jpeg	2010-03-12 14:42:41.000000000 +0100
++++ openmotif-2.3.3/lib/Xm/Makefile.am	2011-06-18 16:26:14.782695108 +0200
+@@ -71,7 +71,7 @@ else
+ PRINTS_SRC =
+ endif
+ 
+-libXm_la_LIBADD = ${X_LIBS} ${X_XMU} -lXt -lXext ${LIB_XP} -lX11 ${X_EXTRA_LIBS}
++libXm_la_LIBADD = ${X_LIBS} ${X_XMU} -lXt -lXext ${LIB_XP} -lX11 ${X_EXTRA_LIBS} ${JPEG_LIBS} ${PNG_LIBS}
+ 
+ noinst_HEADERS = BaseClassI.h \
+ BitmapsI.h \

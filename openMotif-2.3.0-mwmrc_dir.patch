@@ -1,5 +1,5 @@
---- doc/man/man1/mwm.1.mwmrcdir	2002-01-05 16:21:11.000000000 +0100
-+++ doc/man/man1/mwm.1	2005-12-09 15:07:38.000000000 +0100
+--- openmotif-2.3.3/doc/man/man1/mwm.1.mwmrcdir	2002-01-05 16:21:11.000000000 +0100
++++ openmotif-2.3.3/doc/man/man1/mwm.1	2005-12-09 15:07:38.000000000 +0100
 @@ -678,8 +678,8 @@
  \fB$HOME\fP/\fBconfigFile\fP\&. If the \fIconfigFile\fP pathname does not begin with "~/" or "/", \fBmwm\fP considers it to be relative to the current working directory\&. If
  the \fIconfigFile\fP resource is not specified
@@ -23,8 +23,8 @@
  .PP
  \fB/usr/X11R6/lib/X11/app-defaults/Mwm\fP
  .PP
---- doc/man/man4/mwmrc.4.mwmrcdir	2005-12-09 14:59:00.000000000 +0100
-+++ doc/man/man4/mwmrc.4	2005-12-09 14:59:02.000000000 +0100
+--- openmotif-2.3.3/doc/man/man4/mwmrc.4.mwmrcdir	2005-12-09 14:59:00.000000000 +0100
++++ openmotif-2.3.3/doc/man/man4/mwmrc.4	2005-12-09 14:59:02.000000000 +0100
 @@ -57,7 +57,7 @@
  It contains descriptions of resources that cannot easily be
  written using standard X Window System, Version 11 resource syntax\&. The resource
@@ -65,74 +65,14 @@
  .fi
  .SH "RELATED INFORMATION"
  .PP
---- clients/mwm/WmResParse.c.mwmrcdir	2002-05-17 17:21:53.000000000 +0200
-+++ clients/mwm/WmResParse.c	2005-12-09 09:23:28.000000000 +0100
-@@ -2402,15 +2402,15 @@
-   {
- #endif /* PANELIST */
+--- openmotif-2.3.3/configure.ac.mwmrc_dir	2011-06-18 16:38:51.691838943 +0200
++++ openmotif-2.3.3/configure.ac	2011-06-18 17:25:17.879253819 +0200
+@@ -208,7 +208,7 @@
+ LIBDIR="${libdir}/X11"
+ AC_SUBST(LIBDIR)
  
--#ifndef LIBDIR
--#define LIBDIR "/usr/lib/X11"
-+#ifndef MWMRC_DIR
-+#define MWMRC_DIR "/etc/X11/mwm"
- #endif
-     if (LANG != NULL)
-     {
- #ifdef WSM
- 	if (MwmBehavior)
- 	{
--	    strcpy(cfileName, LIBDIR);
-+	    strcpy(cfileName, MWMRC_DIR);
- 	    strncat(cfileName, "/", MAXWMPATH-strlen(cfileName));
- 	    strncat(cfileName, LANG, MAXWMPATH-strlen(cfileName));
- 	    strncat(cfileName, SLASH_MWMRC, MAXWMPATH - strlen(cfileName));
-@@ -2426,7 +2426,7 @@
-        /*
- 	* Try /$LANG/system.mwmrc within the install tree
- 	*/
--	strcpy(cfileName, LIBDIR);
-+	strcpy(cfileName, MWMRC_DIR);
- 	strncat(cfileName, "/", MAXWMPATH-strlen(cfileName));
- 	strncat(cfileName, LANG, MAXWMPATH-strlen(cfileName));
- 	strncat(cfileName, SLASH_MWMRC, MAXWMPATH - strlen(cfileName));
-@@ -2448,7 +2448,7 @@
- #ifdef WSM
-     if (MwmBehavior)
-     {
--	strcpy(cfileName, LIBDIR);
-+	strcpy(cfileName, MWMRC_DIR);
- 	strncat(cfileName, SLASH_MWMRC, MAXWMPATH - strlen(cfileName));
- #ifdef PANELIST
- 	fileP = fopen (cfileName, "r");
-@@ -2472,7 +2472,7 @@
-     /*
-      * Try /system.mwmrc within the install tree
-      */
--    strcpy(cfileName, LIBDIR);
-+    strcpy(cfileName, MWMRC_DIR);
-     strncat(cfileName, SLASH_MWMRC, MAXWMPATH - strlen(cfileName));
+-MWMRCDIR="${libdir}/X11"
++MWMRCDIR="${sysconfdir}/X11/mwm"
+ AC_SUBST(MWMRCDIR)
  
-     if (LANG != NULL) 
---- clients/mwm/Makefile.am.mwmrcdir	2005-12-09 09:21:04.000000000 +0100
-+++ clients/mwm/Makefile.am	2005-12-09 09:21:19.000000000 +0100
-@@ -4,7 +4,7 @@
- 
- SUBDIRS = WmWsmLib
- 
--rcdir = @LIBDIR@
-+rcdir = /etc/X11/mwm
- 
- rc_DATA = system.mwmrc
- 
---- clients/mwm/Makefile.in.mwmrcdir	2005-12-09 13:40:46.000000000 +0100
-+++ clients/mwm/Makefile.in	2005-12-09 13:40:48.000000000 +0100
-@@ -252,7 +252,7 @@
- MAINTAINERCLEANFILES = Makefile.in
- EXTRA_DIST = Mwm.msg $(rc_DATA)
- SUBDIRS = WmWsmLib
--rcdir = @LIBDIR@
-+rcdir = /etc/X11/mwm
- rc_DATA = system.mwmrc
- mwm_LDADD = ./WmWsmLib/libWsm.a ../../lib/Xm/libXm.la 
- INCLUDES = -DLARGECURSORS -DR2_COMPAT -DUNMAP_ON_RESTART \
-
+ INCDIR="${includedir}/X11"
