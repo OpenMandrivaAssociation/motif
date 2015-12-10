@@ -24,6 +24,7 @@ BuildRequires:	libxft-devel
 BuildRequires:	x11-data-bitmaps
 BuildRequires:	jpeg-devel
 BuildRequires:	libpng-devel
+BuildRequires:	pkgconfig(xext)
 BuildRequires:	gcc-c++, gcc, gcc-cpp
 
 Patch0: openMotif-2.3.0-no_demos.patch
