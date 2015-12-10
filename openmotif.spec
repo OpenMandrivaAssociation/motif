@@ -18,7 +18,7 @@ Source1: xmbind
 URL: http://motif.ics.com/
 
 BuildRequires:	byacc pkgconfig
-BuildRequires:	flex
+BuildRequires:	flex-devel
 BuildRequires:	libxt-devel
 BuildRequires:	libxft-devel
 BuildRequires:	x11-data-bitmaps
