@@ -17,7 +17,7 @@ Source0: http://sourceforge.net/projects/motif/files/motif-%{version}.tar.gz
 Source1: xmbind
 URL: http://motif.ics.com/
 
-BuildRequires:	byacc pkgconfig
+BuildRequires:	byacc
 BuildRequires:	flex-devel
 BuildRequires:	libxt-devel
 BuildRequires:	libxft-devel
@@ -25,7 +25,6 @@ BuildRequires:	x11-data-bitmaps
 BuildRequires:	jpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	pkgconfig(xext)
-BuildRequires:	gcc-c++, gcc, gcc-cpp
 
 Patch0: openMotif-2.3.0-no_demos.patch
 Patch1: openMotif-2.2.3-uil_lib.patch
@@ -89,7 +88,6 @@ static libraries and header files necessary to build Motif applications.
 %patch5 -p0 -b .no_X11R6
 %patch6 -p1 -b .str-fmt
 %patch8 -p1
-#%patch9 -p1
 
 for i in doc/man/man3/{XmColumn,XmDataField}.3; do
 	iconv -f windows-1252 -t utf-8 < "$i" > "${i}_"
@@ -97,9 +95,6 @@ for i in doc/man/man3/{XmColumn,XmDataField}.3; do
 done
 
 %build
-#export CC=gcc
-#export CXX=g++
-
 libtoolize --copy --force --install
 aclocal -I.
 autoheader
@@ -161,5 +156,3 @@ rm -fr %{buildroot}%{_libdir}/*.la \
 %{_mandir}/man1/uil.1*
 %{_mandir}/man3/*
 %{_mandir}/man5/*
-
-
