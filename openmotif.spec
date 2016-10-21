@@ -9,11 +9,11 @@
 
 Summary: Open Motif runtime libraries and executables
 Name: motif
-Version: 2.3.4
+Version: 2.3.6
 Release: 1
 License: LGPLv2+
 Group: System/Libraries
-Source0: http://sourceforge.net/projects/motif/files/motif-%{version}-src.tgz
+Source0: http://sourceforge.net/projects/motif/files/motif-%{version}.tar.gz
 Source1: xmbind
 URL: http://motif.ics.com/
 
@@ -34,9 +34,7 @@ Patch3: openMotif-2.3.0-mwmrc_dir.patch
 Patch4: openMotif-2.3.0-bindings.patch
 Patch5: openMotif-2.3.0-no_X11R6.patch
 Patch6: openMotif-2.3.0-fix-str-fmt.patch
-Patch7: openmotif-2.3.3-automake-1.13.patch
 Patch8: openmotif-2.3.3-jpeg.patch
-Patch9: motif-2.3.4-freetype-fontconfig.patch
 
 Conflicts: lesstif <= 0.92.32-6
 
@@ -90,9 +88,8 @@ static libraries and header files necessary to build Motif applications.
 %patch4 -p1 -b .bindings
 %patch5 -p0 -b .no_X11R6
 %patch6 -p1 -b .str-fmt
-%patch7 -p1 -b .am113
 %patch8 -p1
-%patch9 -p1
+#%patch9 -p1
 
 for i in doc/man/man3/{XmColumn,XmDataField}.3; do
 	iconv -f windows-1252 -t utf-8 < "$i" > "${i}_"
@@ -100,17 +97,19 @@ for i in doc/man/man3/{XmColumn,XmDataField}.3; do
 done
 
 %build
-export CC=gcc
-export CXX=g++
+#export CC=gcc
+#export CXX=g++
 
 libtoolize --copy --force --install
 aclocal -I.
 autoheader
 automake -a -c -f --foreign
 autoconf
+# disable compilation of demo binaries
+sed -i -e '/^SUBDIRS/{:x;/\\$/{N;bx;};s/[ \t\n\\]*demos//;}' Makefile.am
 
-CFLAGS="$RPM_OPT_FLAGS -D_FILE_OFFSET_BITS=64" \
-%configure2_5x \
+CFLAGS="%{optflags} -D_FILE_OFFSET_BITS=64" \
+%configure \
    --enable-static
 
 # do not use rpath
