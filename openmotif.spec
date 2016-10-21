@@ -69,6 +69,7 @@ Group: Development/C
 Conflicts: lesstif-devel <= 0.92.32-6
 Provides: lib%{name}-devel = %{version}-%{release}
 Provides: %{name}-devel = %{version}-%{release}
+Provides: open%{name}-devel = %{version}-%{release}
 Requires: %{libname} = %{version}-%{release}
 Requires: %{mrmlibname} = %{version}-%{release}
 Requires: %{uillibname} = %{version}-%{release}
