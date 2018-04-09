@@ -3,13 +3,14 @@
 %define mrmlibname %mklibname mrm %{major}
 %define uillibname %mklibname uil %{major}
 %define develname %mklibname %name -d
+%define olddevelname %mklibname openmotif -d
 
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
 
-Summary: Open Motif runtime libraries and executables
+Summary: Motif runtime libraries and executables
 Name: motif
-Version: 2.3.6
+Version: 2.3.8
 Release: 1
 License: LGPLv2+
 Group: System/Libraries
@@ -36,9 +37,10 @@ Patch6: openMotif-2.3.0-fix-str-fmt.patch
 Patch8: openmotif-2.3.3-jpeg.patch
 
 Conflicts: lesstif <= 0.92.32-6
+%rename openmotif
 
 %description
-This is the Open Motif %{version} runtime environment. It includes the
+This is the Motif %{version} runtime environment. It includes the
 Motif shared libraries, needed to run applications which are dynamically
 linked against Motif, and the Motif Window Manager "mwm".
 
@@ -74,6 +76,7 @@ Requires: %{libname} = %{version}-%{release}
 Requires: %{mrmlibname} = %{version}-%{release}
 Requires: %{uillibname} = %{version}-%{release}
 Obsoletes: %{_lib}%{name}4-devel
+%rename %{olddevelname}
 
 %description -n %{develname}
 This is the Motif %{version} development environment. It includes the
