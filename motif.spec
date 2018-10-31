@@ -11,7 +11,7 @@
 Summary: Motif runtime libraries and executables
 Name: motif
 Version: 2.3.8
-Release: 1
+Release: 2
 License: LGPLv2+
 Group: System/Libraries
 Source0: http://sourceforge.net/projects/motif/files/motif-%{version}.tar.gz
