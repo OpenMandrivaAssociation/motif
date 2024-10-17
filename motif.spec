@@ -16,7 +16,7 @@ License: LGPLv2+
 Group: System/Libraries
 Source0: http://sourceforge.net/projects/motif/files/motif-%{version}.tar.gz
 Source1: xmbind
-URL: http://motif.ics.com/
+URL: https://motif.ics.com/
 
 BuildRequires:	byacc
 BuildRequires:	flex-devel
